@@ -1,0 +1,57 @@
+{% load staticfiles %}
+{% load compress %}
+
+<!doctype html>
+<html xml:lang="{{ LANGUAGE_CODE|default:"en" }}" lang="{{ LANGUAGE_CODE|default:"en" }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="{% block meta-keywords %}{% endblock %}" />
+    <meta name="description" content="{% block meta-description %}{% endblock %}" />
+
+    <title>{% block headtitle %}Template Title{% endblock %}</title>
+
+    <meta property="og:type" content="{% block og-type %}website{% endblock %}" />
+    {% compress css %}
+
+    {% block base-css %}
+    <link href="{% static "css/lib/reset-min.css"%}" rel="stylesheet" />
+    <link href="{% static "css/base.css"%}" rel="stylesheet" />
+    {% endblock %}
+
+    {% block extend-css %}
+    {% endblock %}
+    
+    {% endcompress %}
+    
+    
+    <!--[if lt IE 9]>
+<script src="{% static "js/lib/html5shiv.js" %}"></script>
+<![endif]-->
+  </head>
+
+  <body id="{% block bodyid %}page{% endblock %}" class="{% block bodyclass %}default{% endblock %}" itemscope itemtype="http://schema.org/WebPage">
+    <div id="wrapper">
+
+      <header id="top">
+      </header>
+
+      <section id="content">
+        <div id="main">
+          {% block main %}{% endblock %}
+        </div>
+      </section>
+
+      <footer id="bottom">
+      </footer>
+    </div>
+
+    {% compress js %}
+
+    {% block js %}{% endblock %}
+    
+    {% block extend-js %}{% endblock %}
+
+    {% endcompress %}
+  </body>
+</html>
