@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
@@ -27,6 +28,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'compressor',
+    'devserver',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -45,11 +47,15 @@ WSGI_APPLICATION = 'project_template.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
+# TODO consider moving hard coded dev dir
+LOCAL_DEV_DIR = os.path.join(BASE_DIR, "local_dev")
+if not os.path.exists(LOCAL_DEV_DIR):
+    os.mkdir(LOCAL_DEV_DIR)
+    
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(LOCAL_DEV_DIR,'db.sqlite3'),
     }
 }
 
@@ -72,6 +78,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = "static"
+
 # Additional locations of static files
 STATICFILES_DIRS = (
     ('css',os.path.join(BASE_DIR, 'static/css')),
@@ -80,8 +88,21 @@ STATICFILES_DIRS = (
     ('fonts',os.path.join(BASE_DIR, 'static/fonts')),
 )
 
+STATICFILES_FINDERS = (
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder",
+)
+
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "templates")
 )
+
+# for precompiling nonstandard content, e.g. scss
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'sass --scss {infile} {outfile}'),
+)
+
+INTERNAL_IPS = ('127.0.0.1',)
 
 from settings_local import *

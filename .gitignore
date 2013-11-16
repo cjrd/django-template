@@ -38,6 +38,8 @@ nosetests.xml
 tmp
 *~
 \#*\#
+CACHE
+.sass-cache
 
 # Mac
 .DS_Store
@@ -51,3 +53,6 @@ media
 
 # debugging
 .tmp
+
+# dev dirs
+local_dev
