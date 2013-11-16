@@ -30,6 +30,8 @@ included django modules (see requirements.txt):
 * Install [pip](http://www.pip-installer.org/en/latest/); here are [pip's installation instructions](http://www.pip-installer.org/en/latest/installing.html). The following command should not throw an error:
 
         pip -V
+        
+### Creating a virtual environment
 
 1. install virtualenv `pip install virtualenv` (you may need to instead run `sudo pip install virtualenv`)
 1. create a top-level (container) project directory in a desired location, e.g. `mkdir -p ~/MyProjects/<project container name>`
@@ -43,9 +45,21 @@ included django modules (see requirements.txt):
         source bin/activate 
 
 ### creating your project with this template
-1. From within the container directory run
+1. install django
+
+        pip install django>=1.6
+        
+1. rerun your virtual env script
+
+        source bin/activate 
+
+1. from within the container directory run # TODO why isn't this chaning the dir names?
 
         django-admin.py startproject --template=https://github.com/cjrd/django-template/archive/master.zip <project name>
+        
+1. go into the project directory
+
+        cd <project name>
         
 1. install the dependencies
 
